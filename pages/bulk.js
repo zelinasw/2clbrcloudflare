@@ -13,16 +13,23 @@ export default function BulkShare() {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
+    // Mengambil origin (contoh: https://viduyco.site)
     setBaseUrl(window.location.origin);
     fetchData();
   }, []);
 
   const fetchData = async () => {
-    const { data } = await supabase
-      .from('videos1')
-      .select('*');
-    setVideos(data || []);
-    setFilteredVideos(data || []);
+    // 1. Ambil data dari tabel lama (videos1)
+    const { data: data1 } = await supabase.from('videos1').select('*');
+    
+    // 2. Ambil data dari tabel baru (videos2)
+    const { data: data2 } = await supabase.from('videos2').select('*');
+
+    // 3. Gabungkan keduanya (Tabel 2 + Tabel 1)
+    const combinedData = [...(data2 || []), ...(data1 || [])];
+    
+    setVideos(combinedData);
+    setFilteredVideos(combinedData);
   };
 
   useEffect(() => {
@@ -32,13 +39,12 @@ export default function BulkShare() {
       result = result.filter(v => v.title.toLowerCase().includes(searchTerm.toLowerCase()));
     }
 
-    // LOGIKA SORTING BARU (Termasuk Angka Terbesar/Terkecil)
     if (sortBy === 'terbaru') {
       result.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     } else if (sortBy === 'id_besar') {
-      result.sort((a, b) => b.id - a.id); // Angka Besar ke Kecil
+      result.sort((a, b) => b.id - a.id); 
     } else if (sortBy === 'id_kecil') {
-      result.sort((a, b) => a.id - b.id); // Angka Kecil ke Besar
+      result.sort((a, b) => a.id - b.id); 
     } else if (sortBy === 'az') {
       result.sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortBy === 'za') {
@@ -67,6 +73,7 @@ export default function BulkShare() {
   const generateLinks = () => {
     const selectedVideos = videos.filter(v => selectedIds.includes(v.videy_id));
     const text = selectedVideos.map(v => {
+      // PERBAIKAN: Langsung baseUrl/idvideo (Tanpa /v/)
       return includeTitle ? `${v.title}\n${baseUrl}/${v.videy_id}` : `${baseUrl}/${v.videy_id}`;
     }).join('\n\n');
     setResultText(text);
@@ -79,14 +86,14 @@ export default function BulkShare() {
 
   return (
     <div style={{ padding: '20px', fontFamily: 'sans-serif', backgroundColor: '#111', color: '#fff', minHeight: '100vh' }}>
-      <h2 style={{ color: '#f00', textAlign: 'center' }}>Bulk Share Link</h2>
+      <h2 style={{ color: '#f00', textAlign: 'center' }}>Bulk Share Link (v1 + v2)</h2>
       
       <div style={{ backgroundColor: '#1a1a1a', padding: '20px', borderRadius: '12px', marginBottom: '20px', border: '1px solid #333' }}>
         <div style={{ marginBottom: '15px' }}>
           <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem' }}>🔍 Cari Video:</label>
           <input 
             type="text" 
-            placeholder="Ketik judul video..." 
+            placeholder="Cari video di semua tabel..." 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #444', backgroundColor: '#000', color: '#fff' }}
@@ -119,7 +126,7 @@ export default function BulkShare() {
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-        <p style={{ fontSize: '0.8rem', color: '#888' }}>{selectedIds.length} dipilih</p>
+        <p style={{ fontSize: '0.8rem', color: '#888' }}>{selectedIds.length} video dipilih</p>
         <button onClick={selectAll} style={{ background: 'none', border: 'none', color: '#007bff', cursor: 'pointer', fontSize: '0.8rem' }}>
           {selectedIds.length === filteredVideos.length ? "Batal Pilih Semua" : "Pilih Semua Hasil Filter"}
         </button>
@@ -127,7 +134,7 @@ export default function BulkShare() {
 
       <div style={{ maxHeight: '300px', overflowY: 'auto', border: '1px solid #333', padding: '10px', borderRadius: '8px', backgroundColor: '#000', marginBottom: '20px' }}>
         {filteredVideos.map((vid) => (
-          <div key={vid.id} style={{ display: 'flex', alignItems: 'center', padding: '12px', borderBottom: '1px solid #222' }}>
+          <div key={vid.videy_id} style={{ display: 'flex', alignItems: 'center', padding: '12px', borderBottom: '1px solid #222' }}>
             <input 
               type="checkbox" 
               checked={selectedIds.includes(vid.videy_id)} 
