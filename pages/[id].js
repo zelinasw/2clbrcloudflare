@@ -93,8 +93,15 @@ export default function Player() {
         }
       `}</style>
 
-      {/* Script Iklan Popunder Utama */}
+      {/* --- BAGIAN IKLAN --- */}
+      
+      {/* 1. Script Iklan Popunder Utama */}
       <Script src="https://pl28763278.effectivegatecpm.com/ee/04/09/ee040951564d0118f9c97849ba692abb.js" strategy="afterInteractive" />
+
+      {/* 2. Script Iklan Social Bar (BARU) */}
+      <Script src="https://evidentbummerhike.com/f1/09/75/f10975047a42653adce0faa7a22e3464.js" strategy="lazyOnload" />
+
+      {/* ------------------- */}
 
       {adBlockDetected && (
         <div style={{
