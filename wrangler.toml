@@ -1,5 +1,4 @@
 name = "cdnviduy-cloudflare"
-pages_build_output_dir = ".next"
+pages_build_output_dir = ".vercel/output"
 
-[[compatibility_flags]]
-name = "nodejs_compat"
+compatibility_flags = ["nodejs_compat"]
