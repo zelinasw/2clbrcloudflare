@@ -4,12 +4,17 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "pages:build": "npx @cloudflare/next-on-pages"
   },
   "dependencies": {
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
     "@supabase/supabase-js": "latest"
+  },
+  "devDependencies": {
+    "@cloudflare/next-on-pages": "latest",
+    "vercel": "latest"
   }
 }
