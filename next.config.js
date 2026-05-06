@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Cloudflare butuh ini agar bisa menjalankan fungsi serverless
-  runtime: 'edge', 
+  // Pakai runtime edge biar sinkron sama Cloudflare
+  experimental: {
+    runtime: 'edge',
+  },
 };
 
 module.exports = nextConfig;
