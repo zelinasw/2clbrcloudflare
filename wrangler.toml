@@ -1,0 +1,5 @@
+name = "cdnviduy-cloudflare"
+pages_build_output_dir = ".next"
+
+[[compatibility_flags]]
+name = "nodejs_compat"
