@@ -1,4 +1,5 @@
-export const runtime = 'edge';
+// Ganti 'edge' menjadi 'experimental-edge'
+export const runtime = 'experimental-edge';
 import { useState } from 'react';
 import { supabase } from '../lib/supabase';
 
