@@ -4,11 +4,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
     "pages:build": "npx @cloudflare/next-on-pages"
   },
   "dependencies": {
-    "next": "latest",
+    "next": "15.4.11",
     "react": "latest",
     "react-dom": "latest",
     "@supabase/supabase-js": "latest"
