@@ -1,5 +1,6 @@
 name = "2clbrcloudflarenw"
-# Arahkan ke folder static hasil olahan next-on-pages
 pages_build_output_dir = ".vercel/output/static"
 
+# Tambahkan tanggal hari ini atau tanggal rilis fitur ini
+compatibility_date = "2026-05-07"
 compatibility_flags = [ "nodejs_compat" ]
