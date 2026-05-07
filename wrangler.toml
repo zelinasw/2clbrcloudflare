@@ -1,5 +1,5 @@
 name = "2clbrcloudflarenw"
-# Coba arahkan langsung ke folder .next
-pages_build_output_dir = ".next"
+# Arahkan ke folder static hasil olahan next-on-pages
+pages_build_output_dir = ".vercel/output/static"
 
 compatibility_flags = [ "nodejs_compat" ]
