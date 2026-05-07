@@ -1,3 +1,4 @@
+export const runtime = 'experimental-edge';
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 
